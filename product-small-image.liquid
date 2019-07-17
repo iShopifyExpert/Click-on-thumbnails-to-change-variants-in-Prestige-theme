@@ -1,0 +1,5 @@
+Find this line
+<img src="{{ image | img_url: '160x' }}">
+
+And replace with this line (do it multiple times) 2times
+<img src="{{ image | img_url: '160x' }}" {% for variant in product.variants %}{% if image == variant.image %}alt="{{ variant.id }}" data-title="{{ variant.title }}"{% endif %}{% endfor %}>
