@@ -1,0 +1,29 @@
+//Add this code in the Bottom
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+{% assign option_name = 'Color' %}
+{% if product.options contains option_name %}
+<script>
+  $(document).ready(function() {
+    var thumbnails = jQuery('img[src*="/products/"]').not('#related-products img').not('a[href^="/collections/"] img').not('a[href^="/products/"] img').not('header img').not('#drawer img').not('#Product__SlideItem img');
+    var optionSelect; {% assign option_index = 0 %}  {% for option in product.options %}{% if option == option_name %}{% assign option_index = forloop.index0 %}  {% endif %}{% endfor %}{% if product.options.size == 1 %}
+    optionSelect = '.single-option-selector'; {% else %}
+    optionSelect = 'label:contains({{ option_name }}) + .single-option-selector';{% endif %}
+    if (thumbnails.length) {
+      thumbnails.bind('click', function(event) {
+        var item = jQuery(event.currentTarget);
+        var optionValue = jQuery('.single-option-selector option:selected').val();
+        var optionClick = jQuery(this).attr('alt');
+        var optionTitle = jQuery(this).data('title')
+        //if ( optionClick === optionValue ) {
+          jQuery('.single-option-selector').val(optionClick).trigger('change');
+          jQuery('#optioncolor').text(optionTitle);
+          jQuery('.Popover__Content .Popover__ValueList .Popover__Value').removeClass('is-selected');
+          jQuery('.Popover__Content .Popover__ValueList .Popover__Value[data-value="'+optionTitle+'"]').addClass('is-selected');
+          window.history.pushState("", "", '?variant='+ optionClick+'');
+        //}
+      });
+    }
+  });
+</script>
+{% endif %}
