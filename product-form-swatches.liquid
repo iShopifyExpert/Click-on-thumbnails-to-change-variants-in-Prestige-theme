@@ -1,0 +1,5 @@
+Find this line
+<span class="ProductForm__SelectedValue">{{ option.selected_value }}</span>
+
+Add replace with this line
+<span class="ProductForm__SelectedValue"{%if option.name == 'Color'%} id="option{{ option.name | downcase }}"{%endif%}>{{ option.selected_value }}</span>
